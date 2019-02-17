@@ -1,10 +1,10 @@
 package cs3500.marblesolitaire.controller;
 
+import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
 /**
  * Represents a controller as defined by (@code MarbleSolitaireController).
@@ -32,6 +32,18 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     }
   }
 
+  /**
+   * Handles the appending operation given the thing to be appended.
+   * This was newly added in Assignment 4.
+   */
+  private void appendToAp(CharSequence cs) throws IllegalStateException {
+    try {
+      this.ap.append(cs);
+    } catch (IOException e) {
+      throw new IllegalStateException();
+    }
+  }
+
 
   /**
    * Transmits the current state of the game, along with the current score to the Appendable.
@@ -39,14 +51,10 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
    * <p>@param model Represents the current model of the game being played.</p>
    */
   private void transmitGameState(MarbleSolitaireModel model) {
-    try {
-      this.ap.append(model.getGameState());
-      this.ap.append("\n");
-      this.ap.append(String.format("Score: %d", model.getScore()));
-      this.ap.append("\n");
-    } catch (IOException e) {
-      throw new IllegalStateException();
-    }
+    this.appendToAp(model.getGameState());
+    this.appendToAp("\n");
+    this.appendToAp(String.format("Score: %d", model.getScore()));
+    this.appendToAp("\n");
   }
 
   /**
@@ -67,12 +75,8 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
           int nextInp = Integer.parseInt(current);
           userInput.add(nextInp - 1);
         } catch (NumberFormatException e) {
-          try {
-            this.ap.append("Please input a number...");
-            this.ap.append("\n");
-          } catch (IOException p) {
-            throw new IllegalStateException();
-          }
+          this.appendToAp("Please input a number...");
+          this.appendToAp("\n");
         }
       } else {
         throw new IllegalStateException();
@@ -88,7 +92,6 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     if (inp.equalsIgnoreCase("q")) {
       this.quittedGame = true;
     }
-    return;
   }
 
   /**
@@ -131,30 +134,21 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
 
       //(2) check for game over
       if (model.isGameOver()) {
-        try {
-          this.ap.append("Game over!");
-          this.ap.append("\n");
-          this.transmitGameState(model);
-          return;
-        } catch (IOException e) {
-          throw new IllegalStateException();
-        }
+        this.appendToAp("Game over!");
+        this.appendToAp("\n");
+        this.transmitGameState(model);
       }
 
       ArrayList<Integer> userInput = new ArrayList<>();
-      this.getUserInput(userInput);
+      this.getUserInput(userInput); //TODO: RETURN TYPE
       if (this.quittedGame) {
         //transmit the end-of-game stats
-        try {
-          this.ap.append("Game quit!");
-          this.ap.append("\n");
-          this.ap.append("State of game when quit:");
-          this.ap.append("\n");
-          this.transmitGameState(model);
-          this.sc.close();
-        } catch (IOException e) {
-          throw new IllegalStateException();
-        }
+        this.appendToAp("Game quit!");
+        this.appendToAp("\n");
+        this.appendToAp("State of game when quit:");
+        this.appendToAp("\n");
+        this.transmitGameState(model);
+        this.sc.close();
         break;
       } else {
         int fromRow = userInput.get(0);
@@ -164,13 +158,9 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         try {
           model.move(fromRow, fromCol, toRow, toCol);
         } catch (IllegalArgumentException e) {
-          try {
-            String invMove = "Invalid move. Play again. (%d,%d) -> (%d,%d)";
-            this.ap.append(String.format(invMove, fromRow, fromCol, toRow, toCol));
-            this.ap.append("\n");
-          } catch (IOException v) {
-            throw new IllegalStateException();
-          }
+          String invMove = "Invalid move. Play again. (%d,%d) -> (%d,%d)";
+          this.appendToAp(String.format(invMove, fromRow + 1, fromCol + 1, toRow + 1, toCol + 1));
+          this.appendToAp("\n");
         }
         this.transmitGameState(model);
       }

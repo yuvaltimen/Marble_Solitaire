@@ -48,26 +48,28 @@ public class EuropeanSolitaireModelImpl extends SquareSolitaireModelImpl {
     @Override
     protected boolean isValidPosition(int armLength, int sRow, int sCol) {
 
-        //TODO : Put in the clause that creates the octagonal shape for each row
-
-
-//        //Checks that the position is within the dimensions of the board.
-//        boolean checkPositionOnBoard = ((sRow >= 0 && sRow <= 3 * armLength - 3)
-//                && (sCol >= 0 && sCol <= 3 * armLength - 3));
-//
-//        //Checks that the position is not an invalid spot.
-//        boolean checkPositionNotInvalid;
-//        if (sRow < armLength - 1 || sRow > 2 * armLength - 2) {
-//            checkPositionNotInvalid = (sCol >= armLength - 1 && sCol <= 2 * armLength - 2);
-//        } else {
-//            checkPositionNotInvalid = true;
-//        }
-//
-//        //Return the final boolean
-//        return checkPositionOnBoard && checkPositionNotInvalid;
-
         boolean isValidPlus = super.isValidPosition(armLength, sRow, sCol);
-        boolean octCorners = (false);
+        boolean octCorners;
+        //top-left quadrant
+        int bound = armLength - 1;
+        if (sRow < bound && sCol < bound) {
+            octCorners = (sCol + sRow >= bound);
+        }
+        //top right quadrant
+        else if (sRow < bound && sCol > 2 * bound) {
+            octCorners = (Math.abs(sCol - sRow) <= 2 * bound);
+        }
+        //bottom-left quadrant
+        else if (sRow > 2 * bound && sCol < bound) {
+            octCorners = (Math.abs(sCol - sRow) <= 2 * bound);
+        }
+        //bottom-right quadrant
+        else if (sRow > 2 * bound && sCol > 2 * bound) {
+            octCorners = (sCol + sRow <= 5 * bound);
+        }
+        else {
+            octCorners = false;
+        }
 
         return isValidPlus || octCorners;
     }

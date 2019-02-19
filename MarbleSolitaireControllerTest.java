@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+
+import cs3500.marblesolitaire.model.hw02.EuropeanSolitaireModelImpl;
 import org.junit.Test;
 
 import java.io.InputStreamReader;
@@ -10,7 +12,7 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl;
 
 /**
- * Testing class for (@code cs3500.marblesolitaire.controller)
+ * Testing class for (@code src.cs3500.marblesolitaire.controller)
  */
 public class MarbleSolitaireControllerTest {
 
@@ -19,14 +21,14 @@ public class MarbleSolitaireControllerTest {
    * Play the goddamn game.
    * @param args The user input to the console.
    */
-  /*
+
   public static void main(String[] args) {
-    MarbleSolitaireModel myModel = new MarbleSolitaireModelImpl();
+    MarbleSolitaireModel myModel = new EuropeanSolitaireModelImpl(7);
     Readable rd = new InputStreamReader(System.in);
     MarbleSolitaireController myCtrlr = new MarbleSolitaireControllerImpl(rd, System.out);
     myCtrlr.playGame(myModel);
   }
-  */
+
 
 
   /**
@@ -271,7 +273,7 @@ public class MarbleSolitaireControllerTest {
             +             "    O O O\n"
             +             "    O O O\n"
             +             "Score: 31\n"
-            +             "Invalid move. Play again. (0,2) -> (1,2)\n"
+            +             "Invalid move. Play again. (1,3) -> (2,3)\n"
             +             "    O O O\n"
             +             "    O _ O\n"
             +             "O O O _ O O O\n"
@@ -324,7 +326,7 @@ public class MarbleSolitaireControllerTest {
             +             "Score: 31\n"
             +             "Please input a number...\n"
             +             "Please input a number...\n"
-            +             "Invalid move. Play again. (0,1) -> (1,1)\n"
+            +             "Invalid move. Play again. (1,2) -> (2,2)\n"
             +             "    O O O\n"
             +             "    O _ O\n"
             +             "O O O _ O O O\n"
@@ -334,7 +336,7 @@ public class MarbleSolitaireControllerTest {
             +             "    O O O\n"
             +             "Score: 31\n"
             +             "Please input a number...\n"
-            +             "Invalid move. Play again. (1,1) -> (1,1)\n"
+            +             "Invalid move. Play again. (2,2) -> (2,2)\n"
             +             "    O O O\n"
             +             "    O _ O\n"
             +             "O O O _ O O O\n"

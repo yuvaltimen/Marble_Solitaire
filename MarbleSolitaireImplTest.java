@@ -1,3 +1,4 @@
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -6,7 +7,7 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl;
 
 /**
- * Testing class for (@code cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl)
+ * Testing class for (@code MarbleSolitaireModelImpl)
  */
 public class MarbleSolitaireImplTest {
   /**

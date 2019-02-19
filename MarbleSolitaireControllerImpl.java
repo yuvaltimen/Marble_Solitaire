@@ -62,18 +62,19 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
    *
    * <p>@return (@ code ArrayList < Integer >)</p>
    */
-  private void getUserInput(ArrayList<Integer> userInput) {
+  private ArrayList<Integer> getUserInput() {
+    ArrayList<Integer> ans = new ArrayList<>();
 
-    while (userInput.size() < 4) {
+    while (ans.size() < 4) {
       if (this.sc.hasNext()) {
         String current = this.sc.next();
         this.checkQuitted(current);
         if (this.quittedGame) {
-          return;
+          break;
         }
         try {
           int nextInp = Integer.parseInt(current);
-          userInput.add(nextInp - 1);
+          ans.add(nextInp - 1);
         } catch (NumberFormatException e) {
           this.appendToAp("Please input a number...");
           this.appendToAp("\n");
@@ -82,6 +83,7 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         throw new IllegalStateException();
       }
     }
+    return ans;
   }
 
 
@@ -130,17 +132,9 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     }
 
     this.transmitGameState(model);
-    while (true) {
+    while (!model.isGameOver()) {
 
-      //(2) check for game over
-      if (model.isGameOver()) {
-        this.appendToAp("Game over!");
-        this.appendToAp("\n");
-        this.transmitGameState(model);
-      }
-
-      ArrayList<Integer> userInput = new ArrayList<>();
-      this.getUserInput(userInput); //TODO: RETURN TYPE
+      ArrayList<Integer> userInput = this.getUserInput();
       if (this.quittedGame) {
         //transmit the end-of-game stats
         this.appendToAp("Game quit!");
@@ -165,6 +159,11 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         this.transmitGameState(model);
       }
     }
-    this.sc.close();
+    if (model.isGameOver()) {
+      this.appendToAp("Game over!");
+      this.appendToAp("\n");
+      this.transmitGameState(model);
+      this.sc.close();
+    }
   }
 }

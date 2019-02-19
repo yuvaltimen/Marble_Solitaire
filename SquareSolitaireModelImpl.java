@@ -16,12 +16,13 @@ public abstract class SquareSolitaireModelImpl implements MarbleSolitaireModel {
      * @param sCol      represents the column of the initial empty spot.
      */
     public SquareSolitaireModelImpl(int armLength, int sRow, int sCol) {
-        if (!isValidPosition(armLength, sRow, sCol)) {
+        if (!isValidArmLength(armLength)) {
+            throw new IllegalArgumentException("Arm length is invalid.");
+        } else if (!isValidPosition(armLength, sRow, sCol)) {
             String errMsg = String.format("Invalid empty cell position (%d,%d)", sRow, sCol);
             throw new IllegalArgumentException(errMsg);
-        } else if (!isValidArmLength(armLength)) {
-            throw new IllegalArgumentException("Arm length is invalid.");
-        } else {
+        }
+        else {
             this.armLength = armLength;
             this.board = createBoard(armLength);
             this.initializeBoard(sRow, sCol);
@@ -70,7 +71,7 @@ public abstract class SquareSolitaireModelImpl implements MarbleSolitaireModel {
             checkPositionNotInvalid = true;
         }
 
-        //Return the final boolean
+        //Return the final boolean.
         return checkPositionOnBoard && checkPositionNotInvalid;
     }
 

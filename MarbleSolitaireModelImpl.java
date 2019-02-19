@@ -1,5 +1,7 @@
 package cs3500.marblesolitaire.model.hw02;
 
+import cs3500.marblesolitaire.model.hw04.SquareSolitaireModelImpl;
+
 /**
  * Represents a regular game of Marble Solitaire as defined by (@code MarbleSolitaireModel).
  */
